@@ -13,8 +13,11 @@ def show_Tasks():
     if len(tasks) == 0:
         print("No tasks yet.")
     else:
-        for i in range(len(tasks)):
-            print(i + 1, ".", tasks[i])
+        # Added header before listing tasks
+        print("Your Tasks:")
+        # Changed loop: replaced range(len(...)) with enumerate for cleaner code
+        for i, task in enumerate(tasks, start=1):
+            print(i, ".", task)
 
 # Remove a Task
 def remove_Task(tasknum):
