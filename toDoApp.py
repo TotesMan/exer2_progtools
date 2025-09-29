@@ -2,10 +2,12 @@
 
 tasks=[]
 
-def addtask(task) : #Alli
-  tasks.append(task)
-  print("task added!")
-
+def addtask(tasks, description):
+    task = Task(description)
+    tasks.append(task)
+    savetasks(tasks)
+    print(f"Task '{description}' added!")
+  
 def showTasks( ): #CB
     if len(tasks)==0 :
       print("no tasks yet")
@@ -38,4 +40,5 @@ def main():
         else:
             print("wrong choice!!")
 main()
+
 
