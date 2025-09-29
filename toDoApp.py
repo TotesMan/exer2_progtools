@@ -45,8 +45,11 @@ def main():
             if len(tasks) == 0:
                 print("No tasks to remove.")
             else:
-                num = int(input("Enter task no. to remove: "))
-                remove_Task(num)
+                try:
+                    num = int(input("Enter task no. to remove: "))
+                    remove_Task(num)
+                except ValueError:
+                    print("❌ Invalid input. Please enter a number.")
 
         elif chc == "4":
             break
