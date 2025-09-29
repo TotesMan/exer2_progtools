@@ -31,8 +31,11 @@ def main():
         print("4- Exit")
         ch = input("enter choice : ")
         if ch=="1":
-            t = input("enter task : ")
-            addtask(t)
+            t = input("Enter task: ").strip()
+            if t:
+                addtask(tasks, t)
+            else:
+                print("Task cannot be empty.")
         elif ch=="2":
             showTasks()
         elif ch=="3":
@@ -43,6 +46,7 @@ def main():
         else:
             print("wrong choice!!")
 main()
+
 
 
 
