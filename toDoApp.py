@@ -1,5 +1,3 @@
-# toDoApp.py
-
 # Task list
 tasks = []
 
@@ -15,18 +13,27 @@ def show_Tasks():
     else:
         # Added header before listing tasks
         print("Your Tasks:")
-        # Changed loop: replaced range(len(...)) with enumerate for cleaner code
+        # Using enumerate for cleaner iteration
         for i, task in enumerate(tasks, start=1):
             print(i, ".", task)
 
 # Remove a Task
 def remove_Task(tasknum):
-    index = tasknum - 1  # adjust for 1-based input
+    # convert 1-based user input to 0-based index
+    index = tasknum - 1
     if 0 <= index < len(tasks):
         removed = tasks.pop(index)
         print(f"Task '{removed}' has been removed!")
     else:
         print("Invalid task number. Please try again.")
+
+# centralized helper for integer input
+def parse_int(prompt):
+    """Prompt the user and return an int, or None if invalid."""
+    try:
+        return int(input(prompt))
+    except ValueError:
+        return None
 
 # Main loop
 def main():
@@ -49,11 +56,11 @@ def main():
             if len(tasks) == 0:
                 print("No tasks to remove.")
             else:
-                try:
-                    num = int(input("Enter task no. to remove: "))
+                num = parse_int("Enter task no. to remove: ")
+                if num is None:
+                    print("Please enter a valid number.")
+                else:
                     remove_Task(num)
-                except ValueError:
-                    print("Invalid input. Please enter a number.")
 
         elif chc == "4":
             print("Exiting To-Do App. Goodbye!")
