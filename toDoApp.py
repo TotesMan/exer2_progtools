@@ -2,22 +2,23 @@
 
 tasks=[]
 
-def addtask(task) :
+def addtask(task) : #Alli
   tasks.append(task)
   print("task added!")
 
-def showTasks( ):
+def showTasks( ): #CB
     if len(tasks)==0 :
       print("no tasks yet")
     else:
      for i in range (len(tasks)):
       print(i+1,".",tasks[i])
 
-def removetask(tasknumber):
+def removetask(tasknumber): #Jaspur
     tasks.pop(tasknumber) 
     print("task removed!!")
 
 def main():
+  # Totes
     while True:
         print("1 Add Task")
         print("2.Show Tasks")
@@ -37,3 +38,4 @@ def main():
         else:
             print("wrong choice!!")
 main()
+
