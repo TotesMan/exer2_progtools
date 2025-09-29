@@ -1,14 +1,14 @@
 # toDoApp.py
 
-# Initialize Task list
+# Task list
 tasks = []
 
-# Adds a Task to the list
+# Add a Task
 def add_Task(task):
     tasks.append(task)
-    print("Task added!")
+    print(f"Task '{task}' has been added!")
 
-# Shows all Tasks
+# Show Tasks
 def show_Tasks():
     if len(tasks) == 0:
         print("No tasks yet.")
@@ -16,19 +16,20 @@ def show_Tasks():
         for i in range(len(tasks)):
             print(i + 1, ".", tasks[i])
 
-# Deletes a Task
+# Remove a Task
 def remove_Task(tasknum):
-    # convert 1-based user input to 0-based index
-    index = tasknum - 1
+    index = tasknum - 1  # adjust for 1-based input
     if 0 <= index < len(tasks):
         removed = tasks.pop(index)
         print(f"Task '{removed}' has been removed!")
     else:
-        print("Invalid task number.")
+        print("Invalid task number. Please try again.")
 
+# Main loop
 def main():
     while True:
-        print("\n1. Add a Task")
+        print("\n====== To-Do App ======")
+        print("1. Add a Task")
         print("2. Show Tasks")
         print("3. Remove a Task")
         print("4. Exit")
@@ -49,12 +50,14 @@ def main():
                     num = int(input("Enter task no. to remove: "))
                     remove_Task(num)
                 except ValueError:
-                    print("❌ Invalid input. Please enter a number.")
+                    print("Invalid input. Please enter a number.")
 
         elif chc == "4":
+            print("Exiting To-Do App. Goodbye!")
             break
 
         else:
-            print("Please input a valid choice!")
+            print("Please input a valid choice (1–4).")
 
+# Run program
 main()
