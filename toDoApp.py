@@ -19,7 +19,7 @@ def show_Tasks():
 
 # Remove a Task
 def remove_Task(tasknum):
-    # convert 1-based user input to 0-based index
+    # remove_Task expects a 1-based number; convert to 0-based index
     index = tasknum - 1
     if 0 <= index < len(tasks):
         removed = tasks.pop(index)
@@ -27,7 +27,7 @@ def remove_Task(tasknum):
     else:
         print("Invalid task number. Please try again.")
 
-# centralized helper for integer input
+# Centralized helper for integer input
 def parse_int(prompt):
     """Prompt the user and return an int, or None if invalid."""
     try:
@@ -38,16 +38,19 @@ def parse_int(prompt):
 # Main loop
 def main():
     while True:
-        print("\n====== To-Do App ======")
+        print("\n--- To-Do List ---")
         print("1. Add a Task")
         print("2. Show Tasks")
         print("3. Remove a Task")
         print("4. Exit")
-        chc = input("Enter choice: ")
+        chc = input("Enter choice: ").strip()
 
         if chc == "1":
-            task = input("Enter task: ")
-            add_Task(task)
+            task = input("Enter task: ").strip()
+            if task:
+                add_Task(task)
+            else:
+                print("Task cannot be empty.")
 
         elif chc == "2":
             show_Tasks()
