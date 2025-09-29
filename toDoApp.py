@@ -1,6 +1,21 @@
 # toDoApp.py
+import json
+import os
 
 tasks=[]
+TASKS_FILE = "tasks.json"
+
+class Task:
+    def __init__(self, description: str):
+        self.description = description
+
+    def to_dict(self):
+        return {"Task": self.description}
+
+    @staticmethod
+    def from_dict(data):
+        return Task(data["Task"])
+        
 def savetasks(tasks):
     with open(TASKS_FILE, "w") as f:
         json.dump([task.to_dict() for task in tasks], f, indent=4)
@@ -46,6 +61,7 @@ def main():
         else:
             print("wrong choice!!")
 main()
+
 
 
 
