@@ -1,7 +1,10 @@
 # toDoApp.py
 
 tasks=[]
-
+def savetasks(tasks):
+    with open(TASKS_FILE, "w") as f:
+        json.dump([task.to_dict() for task in tasks], f, indent=4)
+        
 def addtask(tasks, description):
     task = Task(description)
     tasks.append(task)
@@ -40,5 +43,6 @@ def main():
         else:
             print("wrong choice!!")
 main()
+
 
 
