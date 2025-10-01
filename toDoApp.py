@@ -26,12 +26,13 @@ def addtask(tasks, description):
     savetasks(tasks)
     print(f"Task '{description}' added!")
   
-def showTasks( ): #CB
-    if len(tasks)==0 :
-      print("no tasks yet")
+def showTasks():
+    if len(tasks) == 0:
+        print("\nNo tasks available. Please add one first.")
     else:
-     for i in range (len(tasks)):
-      print(i+1,".",tasks[i])
+        print("\nYour Tasks:")
+        for i, task in enumerate(tasks, start=1):
+            print(f"{i}. {task.description}")
 
 def removetask(tasknumber):
     tasks.pop(tasknumber) 
@@ -56,8 +57,11 @@ def main():
         elif ch == "2":
             showTasks()
         elif ch == "3":
-            n = int(input("Enter task number to remove: "))
-            removetask(n - 1)   
+            if len(tasks) == 0:
+                print("No tasks to remove.")
+            else:
+                n = int(input("Enter task number to remove: "))
+                removetask(n - 1)
         elif ch == "4":
             print("Goodbye!")
             break
