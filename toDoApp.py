@@ -27,40 +27,48 @@ def addtask(tasks, description):
     savetasks(tasks)
     print(f"Task '{description}' added!")
   
-def showTasks( ): #CB
-    if len(tasks)==0 :
-      print("no tasks yet")
+def showTasks():
+    if len(tasks) == 0:
+        print("\nNo tasks available. Please add one first.")
     else:
-     for i in range (len(tasks)):
-      print(i+1,".",tasks[i])
+        print("\nYour Tasks:")
+        for i, task in enumerate(tasks, start=1):
+            print(f"{i}. {task.description}")
 
-def removetask(tasknumber): #Jaspur
+def removetask(tasknumber):
     tasks.pop(tasknumber) 
     print("task removed!!")
 
 def main():
-  # Totes
     while True:
-        print("1 Add Task")
-        print("2.Show Tasks")
-        print("3.Remove Task")
-        print("4- Exit")
-        ch = input("enter choice : ")
-        if ch=="1":
+        print("\n=== TO-DO LIST MENU ===")
+        print("1. Add Task")
+        print("2. Show Tasks")
+        print("3. Remove Task")
+        print("4. Exit")
+        print("=======================")
+
+        ch = input("Enter your choice: ")
+        if ch == "1":
             t = input("Enter task: ").strip()
             if t:
                 addtask(tasks, t)
             else:
                 print("Task cannot be empty.")
-        elif ch=="2":
+        elif ch == "2":
             showTasks()
-        elif ch=="3":
-            n=int(input("enter task no to remove: "))
-            removetask(n)   
-        elif ch=="4":
-            break;
+        elif ch == "3":
+            if len(tasks) == 0:
+                print("No tasks to remove.")
+            else:
+                n = int(input("Enter task number to remove: "))
+                removetask(n - 1)
+        elif ch == "4":
+            print("Goodbye!")
+            break
         else:
-            print("wrong choice!!")
+            print("Invalid choice. Please try again.")
+
 main()
 
 
