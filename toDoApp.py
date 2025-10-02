@@ -1,76 +1,90 @@
-# Task list
+# toDoApp.py
+import json
+import os
+
 tasks = []
+TASKS_FILE = "tasks.json"
 
-# Add a Task
-def add_Task(task):
+class Task:
+    def __init__(self, description: str):
+        self.description = description
+
+    def to_dict(self):
+        return {"Task": self.description}
+
+    @staticmethod
+    def from_dict(data):
+        return Task(data["Task"])
+
+def loadtasks():
+    if os.path.exists(TASKS_FILE):
+        with open(TASKS_FILE, "r") as f:
+            data = json.load(f)
+            return [Task.from_dict(item) for item in data]
+    return []
+
+def savetasks(tasks):
+    with open(TASKS_FILE, "w") as f:
+        json.dump([task.to_dict() for task in tasks], f, indent=4)
+
+def addtask(tasks, description):
+    task = Task(description)
     tasks.append(task)
-    print(f"Task '{task}' has been added!")
+    savetasks(tasks)
+    print(f"Task '{description}' added!")
 
-# Show Tasks
-def show_Tasks():
+def showTasks():
     if len(tasks) == 0:
-        print("No tasks yet.")
+        print("\nNo tasks available. Please add one first.")
     else:
-        # Added header before listing tasks
-        print("Your Tasks:")
-        # Using enumerate for cleaner iteration
+        print("\nYour Tasks:")
         for i, task in enumerate(tasks, start=1):
-            print(i, ".", task)
+            print(f"{i}. {task.description}")
 
-# Remove a Task
-def remove_Task(tasknum):
-    # remove_Task expects a 1-based number; convert to 0-based index
-    index = tasknum - 1
+def removetask(tasknumber):
+    index = tasknumber - 1
     if 0 <= index < len(tasks):
         removed = tasks.pop(index)
-        print(f"Task '{removed}' has been removed!")
+        savetasks(tasks)
+        print(f"Task '{removed.description}' has been removed!")
     else:
         print("Invalid task number. Please try again.")
 
-# Centralized helper for integer input
-def parse_int(prompt):
-    """Prompt the user and return an int, or None if invalid."""
-    try:
-        return int(input(prompt))
-    except ValueError:
-        return None
-
 # Main loop
 def main():
-    while True:
-        print("\n--- To-Do List ---")
-        print("1. Add a Task")
-        print("2. Show Tasks")
-        print("3. Remove a Task")
-        print("4. Exit")
-        chc = input("Enter choice: ").strip()
+    global tasks
+    tasks = loadtasks()
 
-        if chc == "1":
-            task = input("Enter task: ").strip()
-            if task:
-                add_Task(task)
+    while True:
+        print("\n=== TO-DO LIST MENU ===")
+        print("1. Add Task")
+        print("2. Show Tasks")
+        print("3. Remove Task")
+        print("4. Exit")
+        print("=======================")
+
+        ch = input("Enter your choice: ")
+        if ch == "1":
+            t = input("Enter task: ").strip()
+            if t:
+                addtask(tasks, t)
             else:
                 print("Task cannot be empty.")
-
-        elif chc == "2":
-            show_Tasks()
-
-        elif chc == "3":
+        elif ch == "2":
+            showTasks()
+        elif ch == "3":
             if len(tasks) == 0:
                 print("No tasks to remove.")
             else:
-                num = parse_int("Enter task no. to remove: ")
-                if num is None:
+                try:
+                    n = int(input("Enter task number to remove: "))
+                    removetask(n)
+                except ValueError:
                     print("Please enter a valid number.")
-                else:
-                    remove_Task(num)
-
-        elif chc == "4":
-            print("Exiting To-Do App. Goodbye!")
+        elif ch == "4":
+            print("Goodbye!")
             break
-
         else:
-            print("Please input a valid choice (1–4).")
+            print("Invalid choice. Please try again.")
 
-# Run program
 main()
