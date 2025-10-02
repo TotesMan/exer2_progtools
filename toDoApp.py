@@ -74,7 +74,7 @@ def main():
     tasks = load_tasks()  # Load tasks when app starts
 
     root = tk.Tk()
-    root.title("Responsive To-Do List")
+    root.title("To-Do List System")
     root.geometry("500x600")
     root.minsize(400, 400)  # Minimum window size
     root.configure(bg="#00796b")  # Background color
@@ -137,3 +137,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+
