@@ -1,9 +1,8 @@
 # toDoApp.py
 import json
-import os 
+import os
 
-
-tasks=[]
+tasks = []
 TASKS_FILE = "tasks.json"
 
 class Task:
@@ -16,17 +15,24 @@ class Task:
     @staticmethod
     def from_dict(data):
         return Task(data["Task"])
-        
+
+def loadtasks():
+    if os.path.exists(TASKS_FILE):
+        with open(TASKS_FILE, "r") as f:
+            data = json.load(f)
+            return [Task.from_dict(item) for item in data]
+    return []
+
 def savetasks(tasks):
     with open(TASKS_FILE, "w") as f:
         json.dump([task.to_dict() for task in tasks], f, indent=4)
-        
+
 def addtask(tasks, description):
     task = Task(description)
     tasks.append(task)
     savetasks(tasks)
     print(f"Task '{description}' added!")
-  
+
 def showTasks():
     if len(tasks) == 0:
         print("\nNo tasks available. Please add one first.")
@@ -36,10 +42,19 @@ def showTasks():
             print(f"{i}. {task.description}")
 
 def removetask(tasknumber):
-    tasks.pop(tasknumber) 
-    print("task removed!!")
+    index = tasknumber - 1
+    if 0 <= index < len(tasks):
+        removed = tasks.pop(index)
+        savetasks(tasks)
+        print(f"Task '{removed.description}' has been removed!")
+    else:
+        print("Invalid task number. Please try again.")
 
+# Main loop
 def main():
+    global tasks
+    tasks = loadtasks()
+
     while True:
         print("\n=== TO-DO LIST MENU ===")
         print("1. Add Task")
@@ -61,8 +76,11 @@ def main():
             if len(tasks) == 0:
                 print("No tasks to remove.")
             else:
-                n = int(input("Enter task number to remove: "))
-                removetask(n - 1)
+                try:
+                    n = int(input("Enter task number to remove: "))
+                    removetask(n)
+                except ValueError:
+                    print("Please enter a valid number.")
         elif ch == "4":
             print("Goodbye!")
             break
@@ -70,9 +88,3 @@ def main():
             print("Invalid choice. Please try again.")
 
 main()
-
-
-
-
-
-
